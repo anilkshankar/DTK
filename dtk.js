@@ -4,8 +4,8 @@
 // purpose: collect dtk words data from users with a web interface and store the data in local storage
 
 var n_words = 0;
-var g_words_to_select = 3; 
-/* shuffles an array */ 
+var g_words_to_select = 3;
+/* shuffles an array */
 shuffle = function(o){ //v1.0
     for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
@@ -24,8 +24,8 @@ btn_style_idx = Math.floor(Math.random()*btn_styles.length); // pick a random st
 var btn_style = btn_styles[btn_style_idx];
 // create html for the table of words
 var dtk_table_contents = "<table class=\"table table-striped table-condensed\"  id=\"dtk_table\" style=\"width:100%;\">"
-var count = 0; // step through the 
-// layout the dtk works in a table with the following r-c 
+var count = 0; // step through the
+// layout the dtk works in a table with the following r-c
 var n_rows = 8;
 var n_cols = 7;
 for (row = 0; row < n_rows; row++) {
@@ -70,7 +70,10 @@ $("#dtk_table :button").click(function() {
 		$((this)).attr("class", "btn btn-danger");
 	}
 	if (n_words >= g_words_to_select) $("#donebtn").fadeIn("slow");
-	else $("#donebtn").fadeOut("slow");	
+	else {
+		$("#donebtn").fadeOut("slow");
+		$("#alert_msg").hide();
+	}
 });
 
 $("#donebtn").click(function() {
@@ -82,7 +85,7 @@ $("#donebtn").click(function() {
 			var d = new Date();
 			var dstr = d.toLocaleString();
 			localStorage[dstr] = selected_words_arr.toString();
-			$("#alert_msg").show(); 
+			$("#alert_msg").show();
 		} catch (e) {
 			if (e == QUOTA_EXCEEDED_ERR) {
 				alert("Quota exceeded!"); //data wasn’t successfully saved due to quota exceed so throw an error
@@ -95,7 +98,7 @@ $('#alert_msg').bind('closed', function () {
   // do something…
   // alert("1-2 1-2 keep it on")
 	$("#dtk_table :button").attr('disabled','disabled');
-	$("#donebtn").hide(); 
+	$("#donebtn").hide();
 })
 /*
  words needs to be an array
